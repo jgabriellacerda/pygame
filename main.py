@@ -19,7 +19,8 @@ pygame.display.set_icon(icon)
 playerImg = pygame.image.load('spaceship.png')
 playerX = 370
 playerY = 64*8
-playerX_change = 0
+playerX_change_left = 0
+playerX_change_right = 0
 player_speed = 8
 
 # Inimigo
@@ -55,15 +56,17 @@ while running:
         # Se uma tecla foi pressionada
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                playerX_change = player_speed
+                playerX_change_right = player_speed
             if event.key == pygame.K_LEFT:
-                playerX_change = -player_speed
+                playerX_change_left = -player_speed
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                playerX_change = 0
+            if event.key == pygame.K_RIGHT:
+                playerX_change_right = 0
+            if event.key == pygame.K_LEFT:
+                playerX_change_left = 0
 
     # Atualiza posicao do player
-    playerX += playerX_change
+    playerX += (playerX_change_left + playerX_change_right)
 
     # Garante que o player nao ultrapasse o limite da tela
     if playerX < 0:
